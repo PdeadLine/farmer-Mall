@@ -1,5 +1,6 @@
 package com.farmer.controller;
 
+import com.farmer.pojo.EasyUiDataGridResult;
 import com.farmer.pojo.TbItem;
 import com.farmer.service.ItemService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,10 +17,25 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class ItemController {
    @Autowired
     private ItemService itemService;
-
+    /**
+        @Author sintai_zx
+        @Date 2018/8/1 11:49
+        @Discreption 查询商品
+    */
     @ResponseBody
     @RequestMapping("/item/{itemId}")
     public TbItem getItemByid(@PathVariable long itemId) {
         return itemService.getItemById(itemId);
+    }
+
+    /**
+        @Author sintai_zx
+        @Date 2018/8/1 11:48
+        @Discreption 商品列表
+    */
+    @ResponseBody
+    @RequestMapping("/item/list")
+    public EasyUiDataGridResult getItemList(int page,int rows) {
+        return itemService.getItemList(page, rows);
     }
 }
