@@ -113,7 +113,7 @@
     values (#{id,jdbcType=BIGINT}, #{title,jdbcType=VARCHAR}, #{sellPoint,jdbcType=VARCHAR}, 
       #{price,jdbcType=BIGINT}, #{num,jdbcType=INTEGER}, #{barcode,jdbcType=VARCHAR}, 
       #{image,jdbcType=VARCHAR}, #{cid,jdbcType=BIGINT}, #{status,jdbcType=TINYINT}, 
-      #{created,jdbcType=TIMESTAMP}, #{updated,jdbcType=TIMESTAMP})
+      now(), now())
   </insert>
   <insert id="insertSelective" parameterType="com.farmer.pojo.TbItem" >
     insert into tb_item
@@ -181,10 +181,10 @@
         #{status,jdbcType=TINYINT},
       </if>
       <if test="created != null" >
-        #{created,jdbcType=TIMESTAMP},
+        now(),
       </if>
       <if test="updated != null" >
-        #{updated,jdbcType=TIMESTAMP},
+        now(),
       </if>
     </trim>
   </insert>
@@ -283,7 +283,7 @@
         created = #{created,jdbcType=TIMESTAMP},
       </if>
       <if test="updated != null" >
-        updated = #{updated,jdbcType=TIMESTAMP},
+        updated = now(),
       </if>
     </set>
     where id = #{id,jdbcType=BIGINT}
@@ -299,7 +299,7 @@
       cid = #{cid,jdbcType=BIGINT},
       status = #{status,jdbcType=TINYINT},
       created = #{created,jdbcType=TIMESTAMP},
-      updated = #{updated,jdbcType=TIMESTAMP}
+      updated = now()
     where id = #{id,jdbcType=BIGINT}
   </update>
 </mapper>

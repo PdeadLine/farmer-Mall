@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 public class ItemController {
    @Autowired
-    private ItemService itemService;
+   private ItemService itemService;
     /**
         @Author sintai_zx
         @Date 2018/8/1 11:49
@@ -51,4 +51,11 @@ public class ItemController {
         return result;
     }
 
+    @RequestMapping("/rest/item/update")
+    @ResponseBody
+    public FarmerResult editItem(TbItem item,String desc)
+    {
+        FarmerResult result = itemService.editItem(item, desc);
+        return result;
+    }
 }

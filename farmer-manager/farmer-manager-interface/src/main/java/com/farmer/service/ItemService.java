@@ -9,4 +9,5 @@ public interface ItemService {
     public TbItem getItemById(long itemId);
     public EasyUiDataGridResult getItemList(int page, int rows);
     public FarmerResult addItem(TbItem item, String desc);
+    public FarmerResult editItem(TbItem item, String desc);
 }

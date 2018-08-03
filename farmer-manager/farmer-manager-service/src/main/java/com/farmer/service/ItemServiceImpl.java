@@ -58,28 +58,66 @@ public class ItemServiceImpl implements ItemService {
         @Discreption 添加商品
     */
     public FarmerResult addItem(TbItem item, String desc) {
-        //生成商品id
-        long itemId= IDUtils.genItemId();
-        //补全TbItem对象的属性
-        item.setId(itemId);
-        //商品状态1-正常，2-下架，3-删除
-        item.setStatus((byte)1);
-       //这一段可以直接在sql.xml中修改 使用sql的时间函数now()
-        Date date = new Date();
-        item.setCreated(date);
-        item.setUpdated(date);
+        //补全TbItem
+        TbItem tbItem=assembleTbItem(item);
         //向商品表插入数据
-        itemMapper.insert(item);
-        //4、创建一给TbItemDesc对象
-        TbItemDesc itemDesc = new TbItemDesc();
-        // 5、补全TbItemDesc的属性
-        itemDesc.setItemId(itemId);
-        itemDesc.setItemDesc(desc);
-        itemDesc.setCreated(date);
-        itemDesc.setUpdated(date);
+        itemMapper.insert(tbItem);
+        //补全TbItemDesc
+        TbItemDesc itemDesc=assembleTbItemDesc(desc, item);
         //6、向商品描述表插入数据
         itemDescMapper.insert(itemDesc);
         //7farmerResult.ok()
         return FarmerResult.ok();
     }
+    /**
+        @Author sintai_zx
+        @Date 2018/8/3 9:58
+        @Discreption 补全TbItem
+    */
+    private TbItem assembleTbItem(TbItem item) {
+
+        //生成商品id
+        long itemId= item.getId()!=null?item.getId():IDUtils.genItemId();
+        //补全TbItem对象的属性
+        item.setId(itemId);
+        //商品状态1-正常，2-下架，3-删除
+        item.setStatus(Const.ProductStatusEnum.ON_SALE.getCode());
+        //这一段可以直接在sql.xml中修改 使用sql的时间函数now()
+//        Date date = new Date();
+//        item.setCreated(date);
+//        item.setUpdated(date);
+        return item;
+    }
+
+    /**
+        @Author sintai_zx
+        @Date 2018/8/3 10:01
+        @Discreption 补全TbItemDesc
+    */
+    private TbItemDesc assembleTbItemDesc(String desc, TbItem item) {
+        TbItemDesc itemDesc = new TbItemDesc();
+        itemDesc.setItemId(item.getId());
+        itemDesc.setItemDesc(desc);
+//        itemDesc.setCreated(item.getCreated());
+//        itemDesc.setUpdated(item.getUpdated());
+        return itemDesc;
+    }
+
+    /**
+        @Author sintai_zx
+        @Date 2018/8/3 11:17
+        @Discreption 编辑商品
+    */
+    public FarmerResult editItem(TbItem item, String desc) {
+        TbItem tbItem=assembleTbItem(item);
+        itemMapper.updateByPrimaryKeySelective(tbItem);
+        TbItemDesc tbItemDesc = assembleTbItemDesc(desc,item);
+        itemDescMapper.updateByPrimaryKeySelective(tbItemDesc);
+        return FarmerResult.ok();
+    }
+    /**
+        @Author sintai_zx
+        @Date 2018/8/3 12:28
+        @Discreption 删除商品-至状态为删除
+    */
 }

@@ -124,7 +124,7 @@
   <insert id="insert" parameterType="com.farmer.pojo.TbItemDesc" >
     insert into tb_item_desc (item_id, created, updated, 
       item_desc)
-    values (#{itemId,jdbcType=BIGINT}, #{created,jdbcType=TIMESTAMP}, #{updated,jdbcType=TIMESTAMP}, 
+    values (#{itemId,jdbcType=BIGINT}, now(), now(),
       #{itemDesc,jdbcType=LONGVARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.farmer.pojo.TbItemDesc" >
@@ -148,10 +148,10 @@
         #{itemId,jdbcType=BIGINT},
       </if>
       <if test="created != null" >
-        #{created,jdbcType=TIMESTAMP},
+        now(),
       </if>
       <if test="updated != null" >
-        #{updated,jdbcType=TIMESTAMP},
+        now(),
       </if>
       <if test="itemDesc != null" >
         #{itemDesc,jdbcType=LONGVARCHAR},
@@ -210,7 +210,7 @@
         created = #{created,jdbcType=TIMESTAMP},
       </if>
       <if test="updated != null" >
-        updated = #{updated,jdbcType=TIMESTAMP},
+        updated = now(),
       </if>
       <if test="itemDesc != null" >
         item_desc = #{itemDesc,jdbcType=LONGVARCHAR},
@@ -221,14 +221,14 @@
   <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.farmer.pojo.TbItemDesc" >
     update tb_item_desc
     set created = #{created,jdbcType=TIMESTAMP},
-      updated = #{updated,jdbcType=TIMESTAMP},
+      updated = now(),
       item_desc = #{itemDesc,jdbcType=LONGVARCHAR}
     where item_id = #{itemId,jdbcType=BIGINT}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.farmer.pojo.TbItemDesc" >
     update tb_item_desc
     set created = #{created,jdbcType=TIMESTAMP},
-      updated = #{updated,jdbcType=TIMESTAMP}
+      updated = now()
     where item_id = #{itemId,jdbcType=BIGINT}
   </update>
 </mapper>
