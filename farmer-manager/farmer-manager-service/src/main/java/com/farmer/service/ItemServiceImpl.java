@@ -6,8 +6,11 @@ import com.farmer.pojo.*;
 import com.farmer.utils.IDUtils;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.google.common.base.Splitter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
 
 import java.util.Date;
 import java.util.List;
@@ -33,6 +36,16 @@ public class ItemServiceImpl implements ItemService {
         TbItem tbItem = itemMapper.selectByPrimaryKey(itemId);
         return tbItem;
     }
+    /**
+        @Author sintai_zx
+        @Date 2018/8/4 14:26
+        @Discreption 查询商品描述
+    */
+    public TbItemDesc getItemDescByID(long itemId) {
+        TbItemDesc itemDesc = itemDescMapper.selectByPrimaryKey(itemId);
+        return itemDesc;
+    }
+
     /**
         @Author sintai_zx
         @Date 2018/8/1 11:33
@@ -115,9 +128,34 @@ public class ItemServiceImpl implements ItemService {
         itemDescMapper.updateByPrimaryKeySelective(tbItemDesc);
         return FarmerResult.ok();
     }
+
     /**
-        @Author sintai_zx
-        @Date 2018/8/3 12:28
-        @Discreption 删除商品-至状态为删除
-    */
+     * @Author sintai_zx
+     * @Date 2018/8/3 12:28
+     * @Discreption 删除商品
+     */
+    public FarmerResult deleteItemByIds(String itemIds) {
+        List<String> itemIdList = Splitter.on(",").splitToList(itemIds);
+       //空值判断
+        if(CollectionUtils.isEmpty(itemIdList)){
+            return FarmerResult.build(400,"参数不能为空");
+        }
+        int itemCount = itemMapper.deleteByItemIds(itemIdList);
+        int itemDescCount = itemDescMapper.deleteByItemIds(itemIdList);
+        if (itemCount > 0 && itemDescCount > 0) {
+            return FarmerResult.ok();
+        }
+        return FarmerResult.build(400, "删除失败");
+    }
+
+
+    /**
+     * 上下架
+     * @param itemId
+     * @param status
+     * @return
+     */
+    public FarmerResult setSaleStatus(long itemId,Integer status){
+      return FarmerResult.ok();
+    }
 }

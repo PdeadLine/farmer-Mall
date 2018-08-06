@@ -3,12 +3,15 @@ package com.farmer.controller;
 import com.farmer.pojo.EasyUiDataGridResult;
 import com.farmer.pojo.FarmerResult;
 import com.farmer.pojo.TbItem;
+import com.farmer.pojo.TbItemDesc;
 import com.farmer.service.ItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.util.function.LongToIntFunction;
 
 /**
  * create by sintai_zx
@@ -27,6 +30,11 @@ public class ItemController {
     @RequestMapping("/item/{itemId}")
     public TbItem getItemByid(@PathVariable long itemId) {
         return itemService.getItemById(itemId);
+    }
+    @RequestMapping("/rest/item/query/item/desc/{itemId}")
+    @ResponseBody
+    public FarmerResult getItemDescById(@PathVariable long itemId) {
+        return FarmerResult.ok(itemService.getItemDescByID(itemId));
     }
 
     /**
@@ -50,12 +58,23 @@ public class ItemController {
         FarmerResult result = itemService.addItem(item, desc);
         return result;
     }
-
+    /**
+        @Author sintai_zx
+        @Date 2018/8/4 15:48
+        @Discreption 修改商品
+    */
     @RequestMapping("/rest/item/update")
     @ResponseBody
     public FarmerResult editItem(TbItem item,String desc)
     {
         FarmerResult result = itemService.editItem(item, desc);
         return result;
+    }
+
+    @RequestMapping("/rest/item/delete")
+    @ResponseBody
+    public FarmerResult deleteItem(String ids) {
+        System.out.println(ids);
+        return itemService.deleteItemByIds(ids);
     }
 }

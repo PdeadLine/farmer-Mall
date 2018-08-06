@@ -41,7 +41,8 @@
     },{
         text:'编辑',
         iconCls:'icon-edit',
-        handler:function(){
+        handler:function()
+        {
         	var ids = getSelectionsIds();
         	if(ids.length == 0){
         		$.messager.alert('提示','必须选择一个商品才能编辑!');

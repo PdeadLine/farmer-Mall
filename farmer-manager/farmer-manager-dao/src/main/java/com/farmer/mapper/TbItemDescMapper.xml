@@ -231,4 +231,16 @@
       updated = now()
     where item_id = #{itemId,jdbcType=BIGINT}
   </update>
+
+  <delete id="deleteByItemIds" parameterType="map">
+    delete
+    from tb_item_desc
+    where
+    <if test="itemIdList != null">
+      item_id IN
+      <foreach collection="itemIdList" item="item" index="index" open="(" close=")" separator=",">
+        #{item}
+      </foreach>
+    </if>
+  </delete>
 </mapper>
