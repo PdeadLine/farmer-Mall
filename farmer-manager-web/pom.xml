@@ -19,6 +19,11 @@
                 <artifactId>farmer-manager-interface</artifactId>
                 <version>1.0-SNAPSHOT</version>
             </dependency>
+            <dependency>
+                <groupId>com.sintai</groupId>
+                <artifactId>farmer-content-interface</artifactId>
+                <version>1.0-SNAPSHOT</version>
+            </dependency>
 
 
             <!-- JSP相关 -->

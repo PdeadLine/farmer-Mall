@@ -11,6 +11,12 @@
 
     <artifactId>farmer-content-interface</artifactId>
     <packaging>jar</packaging>
-
+    <dependencies>
+        <dependency>
+            <groupId>com.sintai</groupId>
+            <artifactId>farmer-common</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+    </dependencies>
 
 </project>
