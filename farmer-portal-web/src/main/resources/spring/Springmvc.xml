@@ -18,8 +18,9 @@
     <!-- 引用dubbo服务 -->
     <dubbo:application name="farmer-portal-web"/>
     <dubbo:registry protocol="zookeeper" address="192.168.10.23:2181"/>
-    <dubbo:reference interface="com.farmer.service.ItemService" id="itemService" />
-    <dubbo:reference interface="com.farmer.service.ItemCatService" id="itemCatService"/>
+    <dubbo:reference interface="com.farmer.content.service.ContentService" id="contentService" />
+
+
 
 
     <!--加载属性配置文件-->

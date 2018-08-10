@@ -102,13 +102,13 @@
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.farmer.pojo.TbContentCategory" >
-    insert into tb_content_category (id, parent_id, name, 
+  <insert id="insert" parameterType="com.farmer.pojo.TbContentCategory" keyColumn="id" useGeneratedKeys="true" keyProperty="id" >
+    insert into tb_content_category (id, parent_id, name,
       status, sort_order, is_parent, 
       created, updated)
     values (#{id,jdbcType=BIGINT}, #{parentId,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, 
       #{status,jdbcType=INTEGER}, #{sortOrder,jdbcType=INTEGER}, #{isParent,jdbcType=BIT}, 
-      #{created,jdbcType=TIMESTAMP}, #{updated,jdbcType=TIMESTAMP})
+      now(), now())
   </insert>
   <insert id="insertSelective" parameterType="com.farmer.pojo.TbContentCategory" >
     insert into tb_content_category
@@ -158,10 +158,10 @@
         #{isParent,jdbcType=BIT},
       </if>
       <if test="created != null" >
-        #{created,jdbcType=TIMESTAMP},
+        now(),
       </if>
       <if test="updated != null" >
-        #{updated,jdbcType=TIMESTAMP},
+        now(),
       </if>
     </trim>
   </insert>
@@ -239,7 +239,7 @@
         created = #{created,jdbcType=TIMESTAMP},
       </if>
       <if test="updated != null" >
-        updated = #{updated,jdbcType=TIMESTAMP},
+        updated =now()
       </if>
     </set>
     where id = #{id,jdbcType=BIGINT}
@@ -252,7 +252,7 @@
       sort_order = #{sortOrder,jdbcType=INTEGER},
       is_parent = #{isParent,jdbcType=BIT},
       created = #{created,jdbcType=TIMESTAMP},
-      updated = #{updated,jdbcType=TIMESTAMP}
+      updated =now()
     where id = #{id,jdbcType=BIGINT}
   </update>
 </mapper>

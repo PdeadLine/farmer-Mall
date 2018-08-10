@@ -118,6 +118,13 @@
     from tb_content
     where id = #{id,jdbcType=BIGINT}
   </select>
+
+  <select id="selectByCategoryId" resultType="com.farmer.pojo.TbContent" parameterType="long">
+    select
+    <include refid="Base_Column_List"/>
+    from tb_content
+    where category_id=#{categoryId}
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
     delete from tb_content
     where id = #{id,jdbcType=BIGINT}
@@ -128,6 +135,16 @@
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
+  <delete id="deleteByIdsList" parameterMap="java.util.List">
+    delete FROM tb_content
+    WHERE
+    <if test="list != null">
+    id IN
+    <foreach collection="list" separator="," close=")" index="index" item="item" open="(">
+      #{item}
+    </foreach>
+    </if>
+  </delete>
   <insert id="insert" parameterType="com.farmer.pojo.TbContent" >
     insert into tb_content (id, category_id, title, 
       sub_title, title_desc, url, 
@@ -135,8 +152,8 @@
       updated, content)
     values (#{id,jdbcType=BIGINT}, #{categoryId,jdbcType=BIGINT}, #{title,jdbcType=VARCHAR}, 
       #{subTitle,jdbcType=VARCHAR}, #{titleDesc,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR}, 
-      #{pic,jdbcType=VARCHAR}, #{pic2,jdbcType=VARCHAR}, #{created,jdbcType=TIMESTAMP}, 
-      #{updated,jdbcType=TIMESTAMP}, #{content,jdbcType=LONGVARCHAR})
+      #{pic,jdbcType=VARCHAR}, #{pic2,jdbcType=VARCHAR}, now(),
+      now(), #{content,jdbcType=LONGVARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.farmer.pojo.TbContent" >
     insert into tb_content
@@ -201,10 +218,10 @@
         #{pic2,jdbcType=VARCHAR},
       </if>
       <if test="created != null" >
-        #{created,jdbcType=TIMESTAMP},
+        now(),
       </if>
       <if test="updated != null" >
-        #{updated,jdbcType=TIMESTAMP},
+        now(),
       </if>
       <if test="content != null" >
         #{content,jdbcType=LONGVARCHAR},
@@ -248,7 +265,7 @@
         created = #{record.created,jdbcType=TIMESTAMP},
       </if>
       <if test="record.updated != null" >
-        updated = #{record.updated,jdbcType=TIMESTAMP},
+        updated = now(),
       </if>
       <if test="record.content != null" >
         content = #{record.content,jdbcType=LONGVARCHAR},
@@ -286,7 +303,7 @@
       pic = #{record.pic,jdbcType=VARCHAR},
       pic2 = #{record.pic2,jdbcType=VARCHAR},
       created = #{record.created,jdbcType=TIMESTAMP},
-      updated = #{record.updated,jdbcType=TIMESTAMP}
+      updated = now()
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -319,7 +336,7 @@
         created = #{created,jdbcType=TIMESTAMP},
       </if>
       <if test="updated != null" >
-        updated = #{updated,jdbcType=TIMESTAMP},
+        updated = now(),
       </if>
       <if test="content != null" >
         content = #{content,jdbcType=LONGVARCHAR},
@@ -351,7 +368,7 @@
       pic = #{pic,jdbcType=VARCHAR},
       pic2 = #{pic2,jdbcType=VARCHAR},
       created = #{created,jdbcType=TIMESTAMP},
-      updated = #{updated,jdbcType=TIMESTAMP}
+      updated = now()
     where id = #{id,jdbcType=BIGINT}
   </update>
 </mapper>
