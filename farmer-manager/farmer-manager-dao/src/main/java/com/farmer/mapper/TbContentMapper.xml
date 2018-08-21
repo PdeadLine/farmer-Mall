@@ -135,7 +135,7 @@
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <delete id="deleteByIdsList" parameterMap="java.util.List">
+  <delete id="deleteByIdsList" parameterType="java.util.List">
     delete FROM tb_content
     WHERE
     <if test="list != null">

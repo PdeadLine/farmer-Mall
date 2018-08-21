@@ -38,6 +38,7 @@ public class PageController {
     @RequestMapping("/index.html")
     public String showIndex(Model model) {
         //取轮播图的内容信息
+        System.out.println(AD1_CID);
         List<TbContent> contentList = contentService.getContentListByCid(AD1_CID);
         //转换成Ad1NodeList
         List<Ad1Node> ad1List = new ArrayList<>();

@@ -42,13 +42,9 @@ public class ContentServiceImpl implements ContentService{
 
     public List<TbContent> getContentListByCid(Long cId) {
         //根据cid查询内容列表
-        TbContentExample example = new TbContentExample();
-        //设置查询条件
-        TbContentExample.Criteria criteria = example.createCriteria();
-        criteria.andCategoryIdEqualTo(cId);
         //执行查询
-        List<TbContent> list = contentMapper.selectByExample(example);
-        return list;
+        List<TbContent> tbContentList=contentMapper.selectByCategoryId(cId);
+        return tbContentList;
 
     }
 
