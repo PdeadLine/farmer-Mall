@@ -1,18 +1,22 @@
 package com.farmer.content.service.impl;
 
 import com.farmer.content.service.ContentService;
+import com.farmer.jedis.JedisClient;
 import com.farmer.mapper.TbContentMapper;
 import com.farmer.pojo.EasyUiDataGridResult;
 import com.farmer.pojo.FarmerResult;
+import com.farmer.pojo.JsonUtils;
 import com.farmer.pojo.TbContent;
-import com.farmer.pojo.TbContentExample;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.google.common.base.Splitter;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -24,7 +28,10 @@ public class ContentServiceImpl implements ContentService{
 
     @Autowired
     private TbContentMapper contentMapper;
-
+    @Autowired
+    private JedisClient jedisClient;
+    @Value("${INDEX_CONTENT}")
+    private String INDEX_CONTENT;
     /**
         @Author sintai_zx
         @Date 2018/8/9 13:52
@@ -41,9 +48,28 @@ public class ContentServiceImpl implements ContentService{
     }
 
     public List<TbContent> getContentListByCid(Long cId) {
+        //先查询缓存
+        //添加缓存不能影响正常业务逻辑
+        try {
+            String json = jedisClient.hget(INDEX_CONTENT, cId + "");
+            //json转换成list
+            if (StringUtils.isNotBlank(json)) {
+                List<TbContent> list = JsonUtils.jsonToList(json, TbContent.class);
+                return list;
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
         //根据cid查询内容列表
         //执行查询
         List<TbContent> tbContentList=contentMapper.selectByCategoryId(cId);
+        try {
+            jedisClient.hset(INDEX_CONTENT, cId + "", JsonUtils.objectToJson(tbContentList));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         return tbContentList;
 
     }
@@ -53,10 +79,15 @@ public class ContentServiceImpl implements ContentService{
     /**
         @Author sintai_zx
         @Date 2018/8/10 9:59
-        @Discreption 新增内容
+        @Discreption 新增内容- - - 同步缓存
     */
     public FarmerResult saveContent(TbContent content) {
+        //补全日期
+        content.setCreated(new Date());
+        content.setUpdated(new Date());
         int rowsCount=contentMapper.insertSelective(content);
+        //同步缓存
+        jedisClient.hdel(INDEX_CONTENT,content.getId().toString());
         if (rowsCount > 0) {
             return FarmerResult.ok();
         }
@@ -68,7 +99,9 @@ public class ContentServiceImpl implements ContentService{
         @Discreption 编辑内容
     */
     public FarmerResult editContent(TbContent tbContent) {
-        int rowsResult=contentMapper.updateByPrimaryKey(tbContent);
+        int rowsResult = contentMapper.updateByPrimaryKeySelective(tbContent);
+        //同步缓存
+        jedisClient.hdel(INDEX_CONTENT,tbContent.getId().toString());
         if (rowsResult > 0) {
             return FarmerResult.ok();
         }
@@ -86,6 +119,11 @@ public class ContentServiceImpl implements ContentService{
             return FarmerResult.build(400,"参数不能为空");
         }
         int rowsResutl = contentMapper.deleteByIdsList(idsList);
+        //同步缓存
+        for (String s : idsList) {
+            //同步缓存
+            jedisClient.hdel(INDEX_CONTENT,s);
+        }
         if (rowsResutl > 0) {
             return FarmerResult.ok();
         }
