@@ -16,7 +16,6 @@ import java.util.Set;
  */
 public class TestJedis {
 
-    @Test
     public void testJedis() throws Exception{
         Jedis jedis = new Jedis("192.168.10.23", 6379);
         jedis.set("sintaiKey", "123456");
@@ -25,7 +24,6 @@ public class TestJedis {
         jedis.close();
     }
 
-    @Test
     public void testJedisPool() {
         JedisPool jedisPool = new JedisPool("192.168.10.23", 6379);
         Jedis jedis = jedisPool.getResource();
@@ -38,7 +36,6 @@ public class TestJedis {
         jedisPool.close();
     }
 
-    @Test
     public void testJedisCluster() throws IOException {
         Set<HostAndPort> nodes = new HashSet<HostAndPort>();
         nodes.add(new HostAndPort("192.168.10.23", 7001));

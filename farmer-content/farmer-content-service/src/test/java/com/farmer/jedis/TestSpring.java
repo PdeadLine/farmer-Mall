@@ -13,7 +13,6 @@ public class TestSpring {
     /**
      * 集群版redis整合
      */
-    @Test
     public void testJedisClusterClient() {
         //初始化spring 容器
         ApplicationContext applicationContext = new ClassPathXmlApplicationContext("classpath:spring/applicationContext-jedis.xml");
@@ -25,7 +24,6 @@ public class TestSpring {
     /**
      * 单机版redis整合
      */
-    @Test
     public void testJedisPoolClient() {
         ApplicationContext applicationContext = new ClassPathXmlApplicationContext("classpath:spring/applicationContext-jedis.xml");
         JedisClient jedisClient   = applicationContext.getBean(JedisClient.class);
