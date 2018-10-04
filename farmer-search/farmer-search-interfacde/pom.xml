@@ -12,5 +12,14 @@
     <artifactId>farmer-search-interfacde</artifactId>
     <packaging>jar</packaging>
 
+    <dependencies>
+        <dependency>
+            <groupId>com.sintai</groupId>
+            <artifactId>farmer-manager-pojo</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+
+    </dependencies>
+
 
 </project>
