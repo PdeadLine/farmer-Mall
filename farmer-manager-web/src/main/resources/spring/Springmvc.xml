@@ -17,11 +17,12 @@
     </bean>
     <!-- 引用dubbo服务 -->
     <dubbo:application name="farmer-manager-web"/>
-    <dubbo:registry protocol="zookeeper" address="192.168.10.23:2181"/>
+    <dubbo:registry protocol="zookeeper" address="192.168.88.127:2181"/>
     <dubbo:reference interface="com.farmer.service.ItemService" id="itemService" />
     <dubbo:reference interface="com.farmer.service.ItemCatService" id="itemCatService"/>
     <dubbo:reference interface="com.farmer.content.service.ContentCatService" id="contentCatService"/>
     <dubbo:reference interface="com.farmer.content.service.ContentService" id="contentService"/>
+    <dubbo:reference interface="com.farmer.search.service.SearchItemService" id="searchItemService"/>
     <!--静态资源-->
     <mvc:resources mapping="/js/**" location="/js/"/>
     <mvc:resources mapping="/css/**" location="/css/"/>

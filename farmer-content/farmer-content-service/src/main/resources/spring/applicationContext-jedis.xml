@@ -20,27 +20,27 @@
         <!--<constructor-arg>-->
             <!--<set>-->
                 <!--<bean class="redis.clients.jedis.HostAndPort">-->
-                    <!--<constructor-arg name="host" value="192.168.10.23"/>-->
+                    <!--<constructor-arg name="host" value="192.168.88.127"/>-->
                     <!--<constructor-arg name="port" value="7001"/>-->
                 <!--</bean>-->
                 <!--<bean class="redis.clients.jedis.HostAndPort">-->
-                    <!--<constructor-arg name="host" value="192.168.10.23"/>-->
+                    <!--<constructor-arg name="host" value="192.168.88.127"/>-->
                     <!--<constructor-arg name="port" value="7002"/>-->
                 <!--</bean>-->
                 <!--<bean class="redis.clients.jedis.HostAndPort">-->
-                    <!--<constructor-arg name="host" value="192.168.10.23"/>-->
+                    <!--<constructor-arg name="host" value="192.168.88.127"/>-->
                     <!--<constructor-arg name="port" value="7003"/>-->
                 <!--</bean>-->
                 <!--<bean class="redis.clients.jedis.HostAndPort">-->
-                    <!--<constructor-arg name="host" value="192.168.10.23"/>-->
+                    <!--<constructor-arg name="host" value="192.168.88.127"/>-->
                     <!--<constructor-arg name="port" value="7004"/>-->
                 <!--</bean>-->
                 <!--<bean class="redis.clients.jedis.HostAndPort">-->
-                    <!--<constructor-arg name="host" value="192.168.10.23"/>-->
+                    <!--<constructor-arg name="host" value="192.168.88.127"/>-->
                     <!--<constructor-arg name="port" value="7005"/>-->
                 <!--</bean>-->
                 <!--<bean class="redis.clients.jedis.HostAndPort">-->
-                    <!--<constructor-arg name="host" value="192.168.10.23"/>-->
+                    <!--<constructor-arg name="host" value="192.168.88.127"/>-->
                     <!--<constructor-arg name="port" value="7006"/>-->
                 <!--</bean>-->
             <!--</set>-->
@@ -50,7 +50,7 @@
 
     <!--单机版配置-->
     <bean id="jedisPool" class="redis.clients.jedis.JedisPool">
-        <constructor-arg name="host" value="192.168.10.23"/>
+        <constructor-arg name="host" value="192.168.88.127"/>
         <constructor-arg name="port" value="6379"/>
     </bean>
     <bean id="jedisClientPool" class="com.farmer.jedis.JedisClientPool"/>

@@ -17,8 +17,8 @@
     </bean>
     <!-- 引用dubbo服务 -->
     <dubbo:application name="farmer-search-web"/>
-    <dubbo:registry protocol="zookeeper" address="192.168.10.23:2181"/>
-    <!--<dubbo:reference interface="com.farmer.content.service.ContentService" id="contentService" />-->
+    <dubbo:registry protocol="zookeeper" address="192.168.88.127:2181"/>
+    <dubbo:reference interface="com.farmer.search.service.SearchItemService" id="searchItemService" />
 
 
 

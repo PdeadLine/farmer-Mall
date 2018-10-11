@@ -17,7 +17,7 @@ import java.util.Set;
 public class TestJedis {
 
     public void testJedis() throws Exception{
-        Jedis jedis = new Jedis("192.168.10.23", 6379);
+        Jedis jedis = new Jedis("192.168.88.127", 6379);
         jedis.set("sintaiKey", "123456");
         String result = jedis.get("sintaiKey");
         System.out.println(result);
@@ -25,7 +25,7 @@ public class TestJedis {
     }
 
     public void testJedisPool() {
-        JedisPool jedisPool = new JedisPool("192.168.10.23", 6379);
+        JedisPool jedisPool = new JedisPool("192.168.88.127", 6379);
         Jedis jedis = jedisPool.getResource();
         jedis.set("zixunKey", "987654");
         String result=jedis.get("zixunKey");
@@ -38,12 +38,12 @@ public class TestJedis {
 
     public void testJedisCluster() throws IOException {
         Set<HostAndPort> nodes = new HashSet<HostAndPort>();
-        nodes.add(new HostAndPort("192.168.10.23", 7001));
-        nodes.add(new HostAndPort("192.168.10.23", 7002));
-        nodes.add(new HostAndPort("192.168.10.23", 7003));
-        nodes.add(new HostAndPort("192.168.10.23", 7004));
-        nodes.add(new HostAndPort("192.168.10.23", 7005));
-        nodes.add(new HostAndPort("192.168.10.23", 7006));
+        nodes.add(new HostAndPort("192.168.88.127", 7001));
+        nodes.add(new HostAndPort("192.168.88.127", 7002));
+        nodes.add(new HostAndPort("192.168.88.127", 7003));
+        nodes.add(new HostAndPort("192.168.88.127", 7004));
+        nodes.add(new HostAndPort("192.168.88.127", 7005));
+        nodes.add(new HostAndPort("192.168.88.127", 7006));
         JedisCluster jedisCluster = new JedisCluster(nodes);
         jedisCluster.set("clusterKey", "123123123131213");
         String result = jedisCluster.get("clusterKey");

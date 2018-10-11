@@ -13,7 +13,7 @@
     <artifactId>farmer-search</artifactId>
     <packaging>pom</packaging>
     <modules>
-        <module>farmer-search-interfacde</module>
+        <module>farmer-search-interface</module>
         <module>farmer-search-service</module>
     </modules>
 

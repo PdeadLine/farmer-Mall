@@ -12,7 +12,7 @@
 		</commentGenerator>
 		<!--数据库连接的信息：驱动类、连接地址、用户名、密码 -->
 		<jdbcConnection driverClass="com.mysql.jdbc.Driver"
-			connectionURL="jdbc:mysql://192.168.10.23:3306/farmer" userId="sintai"
+			connectionURL="jdbc:mysql://192.168.88.127:3306/farmer" userId="sintai"
 			password="sintai">
 		</jdbcConnection>
 		<!-- 默认false，把JDBC DECIMAL 和 NUMERIC 类型解析为 Integer，为 true时把JDBC DECIMAL 和 
